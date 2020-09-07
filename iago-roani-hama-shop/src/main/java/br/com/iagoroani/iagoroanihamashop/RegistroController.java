@@ -1,12 +1,13 @@
 package br.com.iagoroani.iagoroanihamashop;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/registro")
+@RequestMapping("/registros")
 public class RegistroController {
 
     //Atributos
@@ -18,34 +19,44 @@ public class RegistroController {
     }
 
     //Métodos Rest
+
+    @GetMapping
+    public List exibeProdutos(){
+        return produtos;
+    }
+
     @GetMapping("/{produto}")
-    public List exibeProdutos(@PathVariable String produto) {
+    public ResponseEntity exibeProdutosFiltrados(@PathVariable String produto) {
         List<Produto> produtosFiltrados = new ArrayList();
-        for (Produto item : produtos) {
-            if (produto.equals("produtos")) {
-                return produtos;
-            } else if (produto.equals("camisas")) {
-                if (item instanceof CamisaSublimada){
-                    produtosFiltrados.add(item);
-                }
-            } else if (produto.equals("hamabeads")) {
-                if (item instanceof HamaBeads){
-                    produtosFiltrados.add(item);
+        if (produtosFiltrados.size() > 0) {
+            for (Produto item : produtos) {
+                if (produto.equals("camisas")) {
+                    if (item instanceof CamisaSublimada) {
+                        produtosFiltrados.add(item);
+                    }
+                } else if (produto.equals("hamabeads")) {
+                    if (item instanceof HamaBeads) {
+                        produtosFiltrados.add(item);
+                    }
                 }
             }
+            return ResponseEntity.ok(produtosFiltrados);
+        } else {
+            return ResponseEntity.status(204).build();
         }
-        return produtosFiltrados;
+
     }
 
     @PostMapping("/cadastrar-hamabeads")
-    public void addHamaBeads(@RequestBody HamaBeads hamaBeads){
+    public ResponseEntity addHamaBeads(@RequestBody HamaBeads hamaBeads){
         hamaBeads.calcularPrecoCusto();
         hamaBeads.valorVenda();
         produtos.add(hamaBeads);
+        return ResponseEntity.status(201).build();
     }
 
     @PostMapping("/cadastrar-camisa")
-    public void addCamisas(@RequestBody CamisaSublimada camisaSublimada){
+    public ResponseEntity addCamisas(@RequestBody CamisaSublimada camisaSublimada){
         Double precoCamisa = 0.0;
         Double impressao = 0.0;
         Double desgasteMaquinas = 0.0;
@@ -54,23 +65,40 @@ public class RegistroController {
         camisaSublimada.calcularPrecoCusto(precoCamisa, impressao, desgasteMaquinas, transporte, maoDeObra);
         camisaSublimada.valorVenda();
         produtos.add(camisaSublimada);
+        return ResponseEntity.status(201).build();
     }
 
     @PutMapping("/alterar-hamabeads/{id}")
-    public void alterarHamaBeads(@PathVariable int id, @RequestBody HamaBeads hamaBeads){
-        produtos.remove(id-1);
-        produtos.add(id-1, hamaBeads);
+    public ResponseEntity alterarHamaBeads(@PathVariable int id, @RequestBody HamaBeads hamaBeads){
+        if (produtos.size() >= id) {
+            produtos.remove(id - 1);
+            produtos.add(id - 1, hamaBeads);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(404).build();
+        }
     }
 
     @PutMapping("/alterar-camisa/{id}")
-    public void alterarCachorro(@PathVariable int id, @RequestBody CamisaSublimada camisaSublimada){
-        produtos.remove(id-1);
-        produtos.add(id-1, camisaSublimada);
+    public ResponseEntity alterarCachorro(@PathVariable int id, @RequestBody CamisaSublimada camisaSublimada){
+        if (produtos.size() >= id) {
+            produtos.remove(id - 1);
+            produtos.add(id - 1, camisaSublimada);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(404).build();
+        }
     }
 
     @DeleteMapping("/excluir-produto/{id}")
-    public void excluirProduto(@PathVariable int id){
-        produtos.remove(id-1);
+    public ResponseEntity excluirProduto(@PathVariable int id){
+        if (produtos.size() >= id) {
+            produtos.remove(id - 1);
+            return ResponseEntity.ok().build();
+        }
+        else {
+            return ResponseEntity.status(404).build();
+        }
     }
 
 
