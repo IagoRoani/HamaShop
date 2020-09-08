@@ -5,9 +5,13 @@ public abstract  class Produto {
     //Atributos
     private Integer codigo;
     private Integer quantidade;
+    private String nome;
+    private String descricao;
 
     //Constructor
-    public Produto(Integer codigo, Integer quantidade) {
+    public Produto(Integer codigo, Integer quantidade, String nome, String descricao) {
+        this.nome = nome;
+        this.descricao = descricao;
         this.codigo = codigo;
         this.quantidade = quantidade;
     }
@@ -35,5 +39,21 @@ public abstract  class Produto {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

@@ -3,18 +3,14 @@ package br.com.iagoroani.iagoroanihamashop;
 public class HamaBeads extends  Produto{
 
     //Atributos
-    private String nome;
     private Integer quantPecas;
-    private String descricao;
     private Double precoCusto = 0.0;
     private Double valorVenda = 0.0;
 
     //Contructor
     public HamaBeads(Integer codigo, Integer quantidade, String nome, Integer quantPecas, String descricao) {
-        super(codigo, quantidade);
-        this.nome = nome;
+        super(codigo, quantidade, nome, descricao);
         this.quantPecas = quantPecas;
-        this.descricao = descricao;
     }
 
     //Métodos
@@ -29,19 +25,11 @@ public class HamaBeads extends  Produto{
                 "\nCódigo: " + getCodigo() +
                 "\nQuantidade: " + getQuantidade() +
                 "\nHamaBeads: " +
-                "\nNome: " + nome +
+                "\nNome: " + getNome() +
                 "\nQuantidade de peças usado: " + quantPecas +
                 String.format("\nValor gasto: %.2f", precoCusto) +
-                "\nDescrição: " + descricao +
+                "\nDescrição: " + getDescricao() +
                 String.format("\nValor médio para venda: %.2f", valorVenda);
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public Integer getQuantPecas() {
@@ -60,7 +48,7 @@ public class HamaBeads extends  Produto{
         this.precoCusto = precoCusto;
     }
 
-    public Double getValorVenda() {
+    public Double getValorVendaUnidade() {
         return valorVenda;
     }
 
@@ -68,18 +56,10 @@ public class HamaBeads extends  Produto{
         this.valorVenda = valorVenda;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     //Métodos Abstrato
     @Override
     public Double valorVenda() {
-        return valorVenda = precoCusto * 1.5;
+        return valorVenda = precoCusto + precoCusto * 1.5;
     }
 
 }

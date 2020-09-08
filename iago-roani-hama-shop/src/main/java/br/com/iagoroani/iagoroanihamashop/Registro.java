@@ -43,8 +43,8 @@ public class Registro {
         //Criação dos objetos das classes HamaBeads e CamisaSublimada
         HamaBeads chavei1 = new HamaBeads(100000, 2, "Chaveiro Mario Bros", 440, "Chaveio feito com hama beads com o molde do personaem da Nintendo Mario Bros");
         HamaBeads chavei2 = new HamaBeads(200000, 1, "Chaveiro Valorant", 290, "Cahveiro feito com hama beads, tendo como molde a logo do jogo Valorant");
-        CamisaSublimada camisa1 = new CamisaSublimada(300000, 1, "Camisa Naruto v1", "Camisa estampada com uma imagem do Naruto Shippuden");
-        CamisaSublimada camisa2 = new CamisaSublimada(400000, 1, "Camisa One Piece v1", "Camisa estampada com uma imagem de one Piece");
+        CamisaSublimada camisa1 = new CamisaSublimada(300000, 1, "Camisa Naruto v1", "Camisa estampada com uma imagem do Naruto Shippuden", 10.00, 2.50, 3.75, 12.00, 20.00);
+        CamisaSublimada camisa2 = new CamisaSublimada(400000, 1, "Camisa One Piece v1", "Camisa estampada com uma imagem de one Piece",10.45, 3.55, 4.00, 12.00, 20.00);
 
         //Criação do objeto da classe Registro
         Registro registro = new Registro();

@@ -3,16 +3,23 @@ package br.com.iagoroani.iagoroanihamashop;
 public class CamisaSublimada extends Produto {
 
     //Atributos
-    private String nome;
-    private Double precoCusto = 0.0;
-    private String descricao;
-    private Double valorVenda = 0.0;
+    private Double precoCamisa;
+    private Double impressao;
+    private Double desgasteMaquinas;
+    private Double transporte;
+    private Double maoDeObra;
+    private Double precoCusto;
+    private Double valorVenda;
 
     //Constructor
-    public CamisaSublimada(Integer codigo, Integer quantidade, String nome, String descricao) {
-        super(codigo, quantidade);
-        this.nome = nome;
-        this.descricao = descricao;
+
+    public CamisaSublimada(Integer codigo, Integer quantidade, String nome, String descricao, Double precoCamisa, Double impressao, Double desgasteMaquinas, Double transporte, Double maoDeObra) {
+        super(codigo, quantidade, nome, descricao);
+        this.precoCamisa = precoCamisa;
+        this.impressao = impressao;
+        this.desgasteMaquinas = desgasteMaquinas;
+        this.transporte = transporte;
+        this.maoDeObra = maoDeObra;
     }
 
     //Métodos abstrato
@@ -33,18 +40,30 @@ public class CamisaSublimada extends Produto {
                 "\nCódigo: " + getCodigo() +
                 "\nQuantidade: " + getQuantidade() +
                 "\nCamisa Sublimada: " +
-                "\nNome: " + nome +
+                "\nNome: " + getNome() +
                 "\nValor gastos: " + precoCusto +
-                "\nDescrição: " + descricao +
+                "\nDescrição: " + getDescricao() +
                 String.format("\nValor medio para venda: %.2f", valorVenda);
     }
 
-    public String getNome() {
-        return nome;
+    public Double getPrecoCamisa() {
+        return precoCamisa;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public Double getImpressao() {
+        return impressao;
+    }
+
+    public Double getDesgasteMaquinas() {
+        return desgasteMaquinas;
+    }
+
+    public Double getTransporte() {
+        return transporte;
+    }
+
+    public Double getMaoDeObra() {
+        return maoDeObra;
     }
 
     public Double getPrecoCusto() {
@@ -55,19 +74,11 @@ public class CamisaSublimada extends Produto {
         this.precoCusto = precoCusto;
     }
 
-    public Double getValorVenda() {
+    public Double getValorVendaUnidade() {
         return valorVenda;
     }
 
     public void setValorVenda(Double valorVenda) {
         this.valorVenda = valorVenda;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 }

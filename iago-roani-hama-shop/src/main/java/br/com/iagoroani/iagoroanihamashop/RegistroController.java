@@ -21,14 +21,18 @@ public class RegistroController {
     //Métodos Rest
 
     @GetMapping
-    public List exibeProdutos(){
-        return produtos;
+    public ResponseEntity exibeProdutos(){
+        if (produtos.size() <= 0){
+           return ResponseEntity.status(204).build();
+        } else {
+            return ResponseEntity.ok(produtos);
+        }
     }
 
     @GetMapping("/{produto}")
     public ResponseEntity exibeProdutosFiltrados(@PathVariable String produto) {
         List<Produto> produtosFiltrados = new ArrayList();
-        if (produtosFiltrados.size() > 0) {
+        if (produtos.size() > 0) {
             for (Produto item : produtos) {
                 if (produto.equals("camisas")) {
                     if (item instanceof CamisaSublimada) {
@@ -44,7 +48,6 @@ public class RegistroController {
         } else {
             return ResponseEntity.status(204).build();
         }
-
     }
 
     @PostMapping("/cadastrar-hamabeads")
@@ -57,12 +60,8 @@ public class RegistroController {
 
     @PostMapping("/cadastrar-camisa")
     public ResponseEntity addCamisas(@RequestBody CamisaSublimada camisaSublimada){
-        Double precoCamisa = 0.0;
-        Double impressao = 0.0;
-        Double desgasteMaquinas = 0.0;
-        Double transporte = 0.0;
-        Double maoDeObra = 0.0;
-        camisaSublimada.calcularPrecoCusto(precoCamisa, impressao, desgasteMaquinas, transporte, maoDeObra);
+        camisaSublimada.calcularPrecoCusto(camisaSublimada.getPrecoCamisa(), camisaSublimada.getImpressao(),
+                camisaSublimada.getDesgasteMaquinas(), camisaSublimada.getTransporte(), camisaSublimada.getMaoDeObra());
         camisaSublimada.valorVenda();
         produtos.add(camisaSublimada);
         return ResponseEntity.status(201).build();
@@ -72,6 +71,8 @@ public class RegistroController {
     public ResponseEntity alterarHamaBeads(@PathVariable int id, @RequestBody HamaBeads hamaBeads){
         if (produtos.size() >= id) {
             produtos.remove(id - 1);
+            hamaBeads.calcularPrecoCusto();
+            hamaBeads.valorVenda();
             produtos.add(id - 1, hamaBeads);
             return ResponseEntity.ok().build();
         } else {
@@ -83,6 +84,9 @@ public class RegistroController {
     public ResponseEntity alterarCachorro(@PathVariable int id, @RequestBody CamisaSublimada camisaSublimada){
         if (produtos.size() >= id) {
             produtos.remove(id - 1);
+            camisaSublimada.calcularPrecoCusto(camisaSublimada.getPrecoCamisa(), camisaSublimada.getImpressao(),
+                    camisaSublimada.getDesgasteMaquinas(), camisaSublimada.getTransporte(), camisaSublimada.getMaoDeObra());
+            camisaSublimada.valorVenda();
             produtos.add(id - 1, camisaSublimada);
             return ResponseEntity.ok().build();
         } else {
